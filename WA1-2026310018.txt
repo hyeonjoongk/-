@@ -1,0 +1,62 @@
+#include <stdio.h>
+int main(void) {
+    int year = 0;
+    int month = 0;
+    int isLeap = 0;
+    int days = 0;
+    int weeks = 0;
+    int rest = 0;
+    printf("=== 습관 트래커 ===\n");
+    // [TODO] 1-a: 연도를 scanf 로 읽고 범위(2000~2100) 검증. 벗어나면 오류 출력 후 종료
+    printf("연도를 입력하세요 (2000~2100): ");
+    if (scanf("%d", &year) != 1) {
+        return 0;
+    }
+    
+    if (year < 2000 || year > 2100) {
+        printf("[오류] 연도는 2000~2100 사이여야 합니다.\n");
+        printf("프로그램을 종료합니다.\n");
+        return 0;
+    }
+    // [TODO] 1-b: 월을 scanf 로 읽고 범위(1~12) 검증. 벗어나면 오류 출력 후 종료
+    printf("월을 입력하세요 (1~12): ");
+    if (scanf("%d", &month) != 1) {
+        return 0;
+    }
+    if (month < 1 || month > 12) {
+        printf("[오류] 월은 1~12 사이여야 합니다.\n");
+        printf("프로그램을 종료합니다.\n");
+        return 0;
+    }
+    // [TODO] 2: 윤년 판정 (4의 배수이면서 100의 배수가 아니거나, 400의 배수) -> 윤년이면 isLeap에 1, 아니면 0
+    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+        isLeap = 1;
+    } else {
+        isLeap = 0;
+    }
+    // [TODO] 3-a: 그 달의 일수를 days 에 넣기 (4, 6, 9, 11월은 30일 / 2월은 윤년에 따라 28일 또는 29일 / 나머지 31일)
+    if (month == 4 || month == 6 || month == 9 || month == 11) {
+        days = 30;
+    } else if (month == 2) {
+        if (isLeap == 1) {
+            days = 29;
+        } else {
+            days = 28;
+        }
+    } else {
+        days = 31;
+    }
+    // [TODO] 3-b: 일수를 7일씩 묶어 weeks 와 rest 에 넣기
+    weeks = days / 7;
+    rest = days % 7;
+    // [수정 금지] 아래 출력 줄은 수정하지 마세요.
+    printf("\n[%d년 %d월]\n", year, month);
+    if (isLeap) {
+        printf("%d년은 윤년입니다.\n", year);
+    } else {
+        printf("%d년은 윤년이 아닙니다.\n", year);
+    }
+    printf("이 달은 %d일까지 있습니다.\n", days);
+    printf("%d일 = %d주 %d일입니다.\n", days, weeks, rest);
+    return 0;
+}
